@@ -1,7 +1,8 @@
 import os
 
-from flask import Flask, redirect, render_template, request, flash
+from flask import Flask, redirect, render_template, request, flash, url_for
 import time
+from pack import kmeans
 
 UPLOAD_FOLDER = 'client-upload'
 ALLOWED_EXTENSIONS = {'csv'}
@@ -19,7 +20,7 @@ def allowed_file(filename):
 
 @app.route("/")
 def index():
-    return render_template('new_index.html')
+    return render_template('index.html')
 
 
 @app.route("/upload", methods=['GET', 'POST'])
@@ -37,6 +38,13 @@ def upload_data():
             flash('No selected file or not CSV file')
             return redirect(request.url)
         if file and allowed_file(file.filename):
-            file.save(os.path.join(app.config['UPLOAD_FOLDER'], f'{int(time.time())}-data.csv'))
-        return 'this worked'
+            name = f'{int(time.time())}-data'
+            file.save(os.path.join(app.config['UPLOAD_FOLDER'], f'{name}.csv'))
+        return redirect(url_for('results', file_name=name))
     return redirect(request.url)
+
+
+@app.route("/results/<file_name>", methods=['GET'])
+def results(file_name):
+    kmeans.KMeans(file_name).generate()
+    return file_name
