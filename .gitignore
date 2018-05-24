@@ -1,0 +1,7 @@
+client-upload/
+.idea/
+.ipynb_checkpoints/
+*.jpg
+*.ipynb
+__pycache__/
+*.csv
