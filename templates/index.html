@@ -21,6 +21,7 @@
     </style>
     <script>
         function handleFiles(files) {
+            console.log(files[0].type)
             if (files[0].type !== "text/csv") {
                 console.log("file is not CSV");
                 let modal = document.getElementsByClassName("modal")[0];
