@@ -22,7 +22,7 @@ class KMeans:
         f1 = data['height'].values
         f2 = data['weight'].values
         X = np.array(list(zip(f1, f2)))
-        plt.scatter(f1, f2, c='black', s=7)
+        # plt.scatter(f1, f2, c='black', s=7)
 
         # Euclidean Distance Caculator
         def dist(a, b, ax=1):
@@ -32,9 +32,9 @@ class KMeans:
         k = 3
         # Read starting centroid values
         startingCentroids = pd.read_csv('centroids.csv')
-        # X coordinates of random centroids
+        # X coordinates from centroids.csv
         C_x = startingCentroids.iloc[:, 0]
-        # Y coordinates of random centroids
+        # Y coordinates from centroids.csv
         C_y = startingCentroids.iloc[:, 1]
         C = np.array(list(zip(C_x, C_y)), dtype=np.float32)
         print("Initial Centroids")
@@ -42,8 +42,8 @@ class KMeans:
         print(startingCentroids['height'].values.tolist())
 
         # Plotting along with the Centroids
-        plt.scatter(f1, f2, c='#050505', s=7)
-        plt.scatter(C_x, C_y, marker='*', s=200, c='g')
+        # plt.scatter(f1, f2, c='#050505', s=7)
+        # plt.scatter(C_x, C_y, marker='*', s=200, c='g')
         # plt.show()
 
         # To store the value of centroids when it updates
