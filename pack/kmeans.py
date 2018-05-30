@@ -73,4 +73,4 @@ class KMeans:
             points = np.array([X[j] for j in range(len(X)) if clusters[j] == i])
             ax.scatter(points[:, 0], points[:, 1], s=7, c=colors[i])
         ax.scatter(C[:, 0], C[:, 1], marker='*', s=200, c='#050505')
-        plt.savefig(f'graphs/{self.file_name}.png')
+        plt.savefig(f'static/graphs/{self.file_name}.png')

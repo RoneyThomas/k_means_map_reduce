@@ -7,7 +7,7 @@ from pack import kmeans
 UPLOAD_FOLDER = 'client-upload'
 ALLOWED_EXTENSIONS = {'csv'}
 
-app = Flask(__name__)
+app = Flask(__name__, static_url_path='static')
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 # Set the secret key to some random bytes. Keep this really secret!
 app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
@@ -44,7 +44,7 @@ def upload_data():
     return redirect(request.url)
 
 
-@app.route("/results/<file_name>", methods=['GET'])
+@app.route("/graphs/<file_name>", methods=['GET'])
 def results(file_name):
     kmeans.KMeans(file_name).generate()
-    return file_name
+    return render_template('results.html', filename=file_name+".png")
