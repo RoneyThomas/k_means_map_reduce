@@ -14,6 +14,7 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
 # Create directory for the generated graphs
 pathlib.Path('static/graphs').mkdir(parents=True, exist_ok=True)
+pathlib.Path('client-upload').mkdir(parents=True, exist_ok=True)
 
 
 def allowed_file(filename):
