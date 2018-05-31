@@ -1,4 +1,5 @@
 import os
+import pathlib
 
 from flask import Flask, redirect, render_template, request, flash, url_for
 import time
@@ -7,10 +8,12 @@ from pack import kmeans
 UPLOAD_FOLDER = 'client-upload'
 ALLOWED_EXTENSIONS = {'csv'}
 
-app = Flask(__name__, static_url_path='static')
+app = Flask(__name__)
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 # Set the secret key to some random bytes. Keep this really secret!
 app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
+# Create directory for the generated graphs
+pathlib.Path('static/graphs').mkdir(parents=True, exist_ok=True)
 
 
 def allowed_file(filename):
