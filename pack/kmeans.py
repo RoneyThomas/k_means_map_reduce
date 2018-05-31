@@ -9,25 +9,24 @@ class KMeans:
     def __init__(self, file):
         self.file_name = file
 
-    def generate(self):
-        plt.style.use('ggplot')
+    # Euclidean Distance Caculator
+    def dist(self, a, b, ax=1):
+        return np.linalg.norm(a - b, axis=ax)
 
+    def map(self):
         # Importing the dataset
         data = pd.read_csv(f'client-upload/{self.file_name}.csv')
-        print("Input Data and Shape")
-        print(data.shape)
+        # Printing the dataframe
         data.head()
-
-        # Getting the values and plotting it
+        # Getting the values of height and weight in respective list
         f1 = data['height'].values
         f2 = data['weight'].values
+        # Creating numpy array from the list
         X = np.array(list(zip(f1, f2)))
+        return X
         # plt.scatter(f1, f2, c='black', s=7)
 
-        # Euclidean Distance Caculator
-        def dist(a, b, ax=1):
-            return np.linalg.norm(a - b, axis=ax)
-
+    def reduce(self, X):
         # Number of clusters
         k = 3
         # Read starting centroid values
@@ -40,23 +39,21 @@ class KMeans:
         print("Initial Centroids")
         print(C)
         print(startingCentroids['height'].values.tolist())
-
         # Plotting along with the Centroids
         # plt.scatter(f1, f2, c='#050505', s=7)
         # plt.scatter(C_x, C_y, marker='*', s=200, c='g')
         # plt.show()
-
         # To store the value of centroids when it updates
         C_old = np.zeros(C.shape)
         # Cluster Lables(0, 1, 2)
         clusters = np.zeros(len(X))
         # Error func. - Distance between new centroids and old centroids
-        error = dist(C, C_old, None)
+        error = self.dist(C, C_old, None)
         # Loop will run till the error becomes zero
         while error != 0:
             # Assigning each value to its closest cluster
             for i in range(len(X)):
-                distances = dist(X[i], C)
+                distances = self.dist(X[i], C)
                 cluster = np.argmin(distances)
                 clusters[i] = cluster
             # Storing the old centroid values
@@ -65,7 +62,18 @@ class KMeans:
             for i in range(k):
                 points = [X[j] for j in range(len(X)) if clusters[j] == i]
                 C[i] = np.mean(points, axis=0)
-            error = dist(C, C_old, None)
+            # Euclidean Distance Caculator
+            error = self.dist(C, C_old, None)
+            print(error)
+
+        return C, clusters, k
+
+    def generate(self):
+        plt.style.use('ggplot')
+
+        X = self.map()
+        self.reduce(X)
+        C, clusters, k = self.reduce(X)
 
         colors = ['r', 'g', 'b', 'y', 'c', 'm']
         fig, ax = plt.subplots()
