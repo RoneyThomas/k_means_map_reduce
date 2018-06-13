@@ -27,5 +27,19 @@
 <figure class="image is-375by281">
     <img src="../static/graphs/{{filename}}">
 </figure>
+<table class="table is-bordered">
+    <thead>
+    <tr>
+      <th>Centroid</th>
+      <th>[height,weight]</th>
+    </tr>
+  </thead>
+    {% for row in data %}
+    <tr>
+        <td>{{ row.0 }}</td>
+        <td>{{ row.2 }}</td>
+    </tr>
+    {% endfor %}
+</table>
 </body>
 </html>

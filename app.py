@@ -1,5 +1,6 @@
 import os
 import pathlib
+import csv
 
 from flask import Flask, redirect, render_template, request, flash, url_for
 import time
@@ -51,4 +52,6 @@ def upload_data():
 @app.route("/graphs/<file_name>", methods=['GET'])
 def results(file_name):
     kmeans.KMeans(file_name).generate()
-    return render_template('results.html', filename=file_name+".png")
+    rdr = csv.reader(open(f'static/graphs/{file_name}.csv', "r"))
+    csv_data = [row for row in rdr]
+    return render_template('results.html', filename=file_name+".png", data=csv_data)

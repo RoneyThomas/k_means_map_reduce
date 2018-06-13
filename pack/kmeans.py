@@ -58,12 +58,15 @@ class KMeans:
             # Storing the old centroid values
             c_old = deepcopy(C)
             # Finding the new centroids by taking the average value
+            vals_to_disk = {}
             for i in range(k):
                 points = [X[j] for j in range(len(X)) if clusters[j] == i]
+                vals_to_disk[i] = points
                 C[i] = np.mean(points, axis=0)
             # Euclidean Distance Caculator
             error = self.dist(C, c_old, None)
-
+            out_df = pd.concat({k: pd.Series(v) for k, v in vals_to_disk.items()})
+            out_df.to_csv(f'static/graphs/{self.file_name}.csv')
         return C, clusters, k
 
     def generate(self):
