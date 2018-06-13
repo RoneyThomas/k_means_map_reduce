@@ -67,6 +67,11 @@ class KMeans:
             error = self.dist(C, c_old, None)
             out_df = pd.concat({k: pd.Series(v) for k, v in vals_to_disk.items()})
             out_df.to_csv(f'static/graphs/{self.file_name}.csv')
+            maxcount = max(len(v) for v in vals_to_disk.values())
+            most_occuring = [k for k, v in vals_to_disk.items() if len(v) == maxcount]
+            new_file = open(f'static/graphs/{self.file_name}.txt', mode="w", encoding="utf-8")
+            new_file.write(','.join(map(repr, most_occuring)))
+            new_file.close()
         return C, clusters, k
 
     def generate(self):

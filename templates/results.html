@@ -30,10 +30,10 @@
 <table class="table is-bordered">
     <thead>
     <tr>
-      <th>Cluster</th>
-      <th>[height,weight]</th>
+        <th>Cluster</th>
+        <th>[height,weight]</th>
     </tr>
-  </thead>
+    </thead>
     {% for row in data %}
     <tr>
         <td>{{ row.0 }}</td>
@@ -41,5 +41,8 @@
     </tr>
     {% endfor %}
 </table>
+<div class="box">
+    <stron>Cluster that has most data is {{highest}}</stron>
+</div>
 </body>
 </html>
