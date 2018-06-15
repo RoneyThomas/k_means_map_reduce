@@ -42,7 +42,10 @@
     {% endfor %}
 </table>
 <div class="box">
-    <stron>Cluster that has most data is {{highest}}</stron>
+    <strong>Cluster that has most data is {{highest[0]}}</strong><br/>
+    <strong>Cluster one has {{highest[1][0]}} elements</strong><br/>
+    <strong>Cluster two has {{highest[1][2]}} elements</strong><br/>
+    <strong>Cluster three has {{highest[1][4]}} elements</strong><br/>
 </div>
 </body>
 </html>

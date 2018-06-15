@@ -55,5 +55,5 @@ def results(file_name):
     rdr = csv.reader(open(f'static/graphs/{file_name}.csv', "r"))
     csv_data = [row for row in rdr]
     with open(f'static/graphs/{file_name}.txt') as f:
-        new_file = f.read().rstrip("\n")
-    return render_template('results.html', filename=file_name+".png", data=csv_data, highest=new_file)
+        info = [x.strip() for x in f.readlines()]
+    return render_template('results.html', filename=file_name+".png", data=csv_data, highest=info)

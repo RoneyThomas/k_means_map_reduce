@@ -23,6 +23,9 @@ class KMeans:
         weight = data['weight'].values
         # Creating numpy array from the list
         X = np.array(list(zip(height, weight)))
+        # Sorting np array by xy cordinates
+        ind = np.lexsort((X[:, 1], X[:, 0]))
+        X = X[ind]
         return X
         # plt.scatter(height, weight, c='black', s=7)
 
@@ -69,8 +72,11 @@ class KMeans:
             out_df.to_csv(f'static/graphs/{self.file_name}.csv')
             maxcount = max(len(v) for v in vals_to_disk.values())
             most_occuring = [k for k, v in vals_to_disk.items() if len(v) == maxcount]
+            most_occuring[0] += 1
             new_file = open(f'static/graphs/{self.file_name}.txt', mode="w", encoding="utf-8")
             new_file.write(','.join(map(repr, most_occuring)))
+            new_file.write('\n')
+            new_file.write(','.join(map(repr, list(len(v) for v in vals_to_disk.values()))))
             new_file.close()
         return C, clusters, k
 
