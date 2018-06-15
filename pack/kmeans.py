@@ -72,7 +72,7 @@ class KMeans:
             out_df.to_csv(f'static/graphs/{self.file_name}.csv')
             maxcount = max(len(v) for v in vals_to_disk.values())
             most_occuring = [k for k, v in vals_to_disk.items() if len(v) == maxcount]
-            most_occuring[0] += 1
+            most_occuring = map(lambda x: x + 1, most_occuring)
             new_file = open(f'static/graphs/{self.file_name}.txt', mode="w", encoding="utf-8")
             new_file.write(','.join(map(repr, most_occuring)))
             new_file.write('\n')
