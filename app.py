@@ -28,6 +28,11 @@ def index():
     return render_template('index.html')
 
 
+@app.route("/error")
+def error():
+    return render_template('error.html')
+
+
 @app.route("/upload", methods=['GET', 'POST'])
 def upload_data():
     if request.method == 'POST':
@@ -51,10 +56,13 @@ def upload_data():
 
 @app.route("/graphs/<file_name>", methods=['GET'])
 def results(file_name):
-    kmeans.KMeans(file_name).generate()
-    rdr = csv.reader(open(f'static/graphs/{file_name}.csv', "r"))
-    csv_data = [row for row in rdr]
-    with open(f'static/graphs/{file_name}.txt') as f:
-        info = [x.strip() for x in f.readlines()]
-    count = info[1].split(',');
-    return render_template('results.html', filename=file_name+".png", data=csv_data, highest=info, count=count)
+    my_file = pathlib.Path(f'static/graphs/{file_name}.txt')
+    if my_file.is_file():
+        rdr = csv.reader(open(f'static/graphs/{file_name}.csv', "r"))
+        csv_data = [row for row in rdr]
+        with open(f'static/graphs/{file_name}.txt') as f:
+            info = [x.strip() for x in f.readlines()]
+        count = info[1].split(',');
+        return render_template('results.html', filename=file_name + ".png", data=csv_data, highest=info, count=count)
+    else:
+        return redirect(url_for('error'))

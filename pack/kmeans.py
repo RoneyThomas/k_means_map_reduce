@@ -19,8 +19,14 @@ class KMeans:
         # Printing the dataframe
         data.head()
         # Getting the values of height and weight in respective list
-        height = data['height'].values
-        weight = data['weight'].values
+        try:
+            height = data['height'].values
+            weight = data['weight'].values
+        except KeyError:
+            print("Uploaded file not in proper CSV order")
+            return None
+        # do some exception handling here (or just pass)
+        print("Uploaded file is not proper CSV")
         # Creating numpy array from the list
         X = np.array(list(zip(height, weight)))
         # Sorting np array by xy cordinates
@@ -94,3 +100,4 @@ class KMeans:
             ax.scatter(points[:, 0], points[:, 1], s=7, c=colors[i])
         ax.scatter(C[:, 0], C[:, 1], marker='*', s=200, c='#050505')
         plt.savefig(f'static/graphs/{self.file_name}.png')
+        print("Uploaded file not in proper CSV format")
