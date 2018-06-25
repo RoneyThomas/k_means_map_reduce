@@ -56,8 +56,9 @@ def upload_data():
 
 @app.route("/graphs/<file_name>", methods=['GET'])
 def results(file_name):
+    kmeans.KMeans(file_name).generate()
     my_file = pathlib.Path(f'static/graphs/{file_name}.txt')
-    if my_file.is_file():
+    if my_file.exists():
         rdr = csv.reader(open(f'static/graphs/{file_name}.csv', "r"))
         csv_data = [row for row in rdr]
         with open(f'static/graphs/{file_name}.txt') as f:

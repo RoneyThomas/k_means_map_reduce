@@ -18,15 +18,14 @@ class KMeans:
         data = pd.read_csv(f'client-upload/{self.file_name}.csv')
         # Printing the dataframe
         data.head()
-        # Getting the values of height and weight in respective list
+        # do some exception handling here (or just pass)
         try:
+            # Getting the values of height and weight in respective list
             height = data['height'].values
             weight = data['weight'].values
         except KeyError:
             print("Uploaded file not in proper CSV order")
             return None
-        # do some exception handling here (or just pass)
-        print("Uploaded file is not proper CSV")
         # Creating numpy array from the list
         X = np.array(list(zip(height, weight)))
         # Sorting np array by xy cordinates
@@ -90,14 +89,14 @@ class KMeans:
         plt.style.use('ggplot')
 
         X = self.map()
-        self.reduce(X)
-        C, clusters, k = self.reduce(X)
+        if X is not None:
+            self.reduce(X)
+            C, clusters, k = self.reduce(X)
 
-        colors = ['r', 'g', 'b', 'y', 'c', 'm']
-        fig, ax = plt.subplots()
-        for i in range(k):
-            points = np.array([X[j] for j in range(len(X)) if clusters[j] == i])
-            ax.scatter(points[:, 0], points[:, 1], s=7, c=colors[i])
-        ax.scatter(C[:, 0], C[:, 1], marker='*', s=200, c='#050505')
-        plt.savefig(f'static/graphs/{self.file_name}.png')
-        print("Uploaded file not in proper CSV format")
+            colors = ['r', 'g', 'b', 'y', 'c', 'm']
+            fig, ax = plt.subplots()
+            for i in range(k):
+                points = np.array([X[j] for j in range(len(X)) if clusters[j] == i])
+                ax.scatter(points[:, 0], points[:, 1], s=7, c=colors[i])
+            ax.scatter(C[:, 0], C[:, 1], marker='*', s=200, c='#050505')
+            plt.savefig(f'static/graphs/{self.file_name}.png')
