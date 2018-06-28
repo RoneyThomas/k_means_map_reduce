@@ -14,10 +14,11 @@ class KMeans:
         return np.linalg.norm(a - b, axis=ax)
 
     def map(self):
-        # Importing the dataset
-        data = pd.read_csv(f'client-upload/{self.file_name}.csv')
+        # Importing the dataset, only read the first two columns which are height and weight
+        data = pd.read_csv(f'client-upload/{self.file_name}.csv', usecols=['height', 'weight'])
         # Printing the dataframe
         data.head()
+        print(data.head())
         # do some exception handling here (or just pass)
         try:
             # Getting the values of height and weight in respective list
