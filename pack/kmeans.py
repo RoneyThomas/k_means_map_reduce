@@ -18,6 +18,7 @@ class KMeans:
         data = pd.read_csv(f'client-upload/{self.file_name}.csv', usecols=['height', 'weight'])
         # Printing the dataframe
         data.head()
+        data.dropna(subset=['height','weight'], inplace=True)
         print(data.head())
         # do some exception handling here (or just pass)
         try:
